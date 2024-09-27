@@ -1,4 +1,5 @@
 # KUBERNETES
+* kubernetes in short known as k8's
 #### CLUSTER
 * **MASTER**
     * Only gives instructions
@@ -64,6 +65,7 @@ kubectl exec -it <namespace-name> -c <container_name> --bash
 ```
 kubectl describe pod <label-name> 
 ```
+##### Workload components
 1. Namespace
     * it is like a project in your kubernetes cluster to provision your project resources. it is isolated 
     * in kubernetes every resource is YAML
