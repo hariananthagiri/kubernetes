@@ -64,11 +64,11 @@ kubectl get pods -n <namespace_name>
 ```
 * to login to specific container use below command
 ```
-kubectl exec -it <pod-name> -c <container_name> --bash
+kubectl exec -it <pod-name> -c <container_name> -- bash
 ```
 * to known the full information of a label use below command
 ```
-kubectl describe pod <label-name> 
+kubectl describe pod <pod-name> 
 ```
 ##### Workload components
 1. Namespace
