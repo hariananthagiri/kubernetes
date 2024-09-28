@@ -75,7 +75,7 @@ kubectl describe pod <label-name>
     * in kubernetes every resource is YAML
 ```yaml
 apiVersion: v1  # mostly it is v1
-kind: pod
+kind: Namespace
 metadata: # it is nothing but information
   name: hello-pod
 ```
@@ -90,7 +90,7 @@ metadata: # it is nothing but information
     * pod is a collection of containers
 ```yaml
 apiVersion: v1  # mostly it is v1
-kind: pod
+kind: Pod
 metadata: # it is nothing but information
   name: hello-pod
 ```
@@ -100,7 +100,7 @@ metadata: # it is nothing but information
     * to login to a specific container use below command
 ```yaml
 apiVersion: v1  # mostly it is v1
-kind: pod
+kind: Pod
 metadata: # it is nothing but information
   name: hello-pod
 spec:
@@ -108,7 +108,7 @@ containers: # list of containers
 - name: container-1 # container1
     image: nginx 
     ports:
-    - containerport: 80
+    - containerPort: 80
 - name: container-2 # container2
     image: almalinux:8 
     command: ["sleep","100"]
@@ -125,7 +125,7 @@ containers: # list of containers
 * **syntax**
 ```yaml
 apiVersion: v1  # mostly it is v1
-kind: pod
+kind: Pod
 metadata: # it is nothing but information
   name: labels-demo
   labels:   
@@ -136,8 +136,8 @@ metadata: # it is nothing but information
 ```
 * **genral kubernetes syntax**
 ```yaml
-piVersion: v1  # mostly it is v1
-kind: pod
+apiVersion: v1  # mostly it is v1
+kind: Pod
 metadata: # it is nothing but information
   name: hello-pod
   namespace: roboshop
@@ -149,7 +149,7 @@ spec:
   - name: container-1 # container1
     image: nginx 
     ports:
-    - containerport: 80
+    - containerPort: 80
   - name: container-2 # container2
     image: almalinux:8 
     command: ["sleep","100"]
@@ -162,3 +162,10 @@ spec:
 ```
 image: <url>/<image:version>
 ```
+* **NOTE**
+  * In kind first letter must be capital letter [A-Z]
+    ``` kind: [A-Z]a-z```
+  * in containerPort **P** must be capital 
+  ```- containerPort```
+  * in apiVersion **V** is capital
+  ```apiVersion```
