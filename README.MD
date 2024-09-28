@@ -1,9 +1,12 @@
 # KUBERNETES
-* kubernetes in short known as k8's
+* Kubernetes, also known as "K8s", is an open-source container orchestration platform developed by Google.
+* it is designed to automate the deployment, scaling, and management of containerized applications across a cluster of nodes.
+* Kubernetes provides a consistent and reliable way to manage applications, regardless of whether they are running on-premises, in the cloud, or in hybrid environments. 
 #### CLUSTER
 * **MASTER**
     * Only gives instructions
     * if you dont have workers master has to do everything
+    * it also known as control-plane
 * **WORKER**
     * they will do work
 #### MINI KUBE
@@ -12,6 +15,7 @@
 * we can practice basic kubernetes function and also install kubernetes dashboard onit
 #### kubeconfig 
 * it is the files contains authentication information to connect kubernetes cluster
+* if it is not there we have to setup ```~/.kube/config```
 * **kubectl**
 * it is kubernetes controler
 #### kubernetes commands
@@ -75,11 +79,15 @@ kind: pod
 metadata: # it is nothing but information
   name: hello-pod
 ```
-2. pod
-    * it is a simple container, it is a smallest deployable unit in kuberenetes
+2. PODs
+    * In Kubernetes, a "pod" is the smallest and most basic unit of deployment.It represents a single instance of a running process within the cluster.
+    * A pod encapsulates one or more containers, storage resources, network configurations, and other options required to run a specific set of containers together.
+    * Pods are typically created and managed using higher- level abstractions such as Deployments, ReplicaSets, or StatefulSets, which provide additional features like scaling, rolling updates, and self-healing capabilities.
+    * Pods provide several benefits, including resource isolation, flexible deployment strategies, easy scaling, and enhanced reliability.
     * it is a space where your containers will run
     * **pod Vs container** 
     * A pod can contain multiple containers, it is the smallest thing in kuberenetes
+    * pod is a collection of containers
 ```yaml
 apiVersion: v1  # mostly it is v1
 kind: pod
