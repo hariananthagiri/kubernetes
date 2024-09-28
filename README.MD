@@ -57,13 +57,14 @@ kubectl get pods
 ```
 kubectl delete -f <your.yamlfile>
 ```
-* to find the resource in particular namespace use below command
+* to find the pods in particular namespace use below command
 ```
-kubectl get <resource_name> -n <namespace_name>
+kubectl get <pod_name> -n <namespace_name>
+kubectl get pods -n <namespace_name>
 ```
 * to login to specific container use below command
 ```
-kubectl exec -it <namespace-name> -c <container_name> --bash
+kubectl exec -it <pod-name> -c <container_name> --bash
 ```
 * to known the full information of a label use below command
 ```
