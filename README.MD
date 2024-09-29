@@ -99,6 +99,37 @@ kind: Pod
 metadata: # it is nothing but information
   name: hello-pod
 ```
+* **RESOURCES IN POD**
+* VM vs containerisation
+* VM --> 2GB 2CPU --> resources are blocked irrespective of usage
+* containerisation --> containers don't block resources, they are used dynamically
+* we can restrict the resources consumed by containers...
+* **syntax**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+spec:
+  # list of containers
+  containers:
+  - name: hello-pod
+    image: nginx
+    #here with this line port will not be opened, just for information
+    ports:
+    - containerPort: 80
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "68Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
+```
+* where mb is known as mi here
+* limit is always greter than or equal to request [limit >= request]
+
+
 3. spec
     * it is nothing but specifications
     * it gives the information about our pod 
@@ -152,6 +183,34 @@ spec:
     - name: DEMO GRRETING
       value: "hello from the environment"
 ```
+7. resources
+  * to reques the cpu and memory we use it
+  * we contains two types here requests and limits
+  * **requests** is soft reuest **limit** it is heard request both will have memory and cpu options
+  * **LIMIT >= REQUEST**
+8. ConfigMap
+  * it is used to store the configureation in the form of key value pair
+  * 
+* **SYNTAX**
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devops-config
+data:
+  course: DevOps
+  trainer: "SivakumarReddy"
+```
+* to refer the configMap from pod using below syntax
+* **SYNTAX**
+```yaml
+env:
+    - name: course # user defined name you casn can as you like
+      valueFrom:
+        configMapKeyRef:
+          name: configMap name
+          key: key-name
+```
 * **genral kubernetes syntax**
 ```yaml
 apiVersion: v1  # mostly it is v1
@@ -168,12 +227,25 @@ spec:
     image: nginx 
     ports:
     - containerPort: 80
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "68Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
   - name: container-2 # container2
     image: almalinux:8 
     command: ["sleep","100"]
     env:
     - name: DEMO GRRETING
       value: "hello from the environment"
+    env:
+    - name: course
+      valueFrom:
+        configMapKeyRef:
+          name: devops-config
+          key: course
 ```
 * **where**
     1. image
