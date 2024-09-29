@@ -190,7 +190,7 @@ spec:
   * **LIMIT >= REQUEST**
 8. ConfigMap
   * it is used to store the configureation in the form of key value pair
-  * 
+  * to create configmap use below syntax & kubectl create command
 * **SYNTAX**
 ```yaml
 apiVersion: v1
@@ -201,6 +201,14 @@ data:
   course: DevOps
   trainer: "SivakumarReddy"
 ```
+* to see the available configmaps use below command
+```
+kubectl get configmaps
+```
+* to inspect or describe configmaps use below command
+```
+kubectl describe configmaps <configmap-name>
+```
 * to refer the configMap from pod using below syntax
 * **SYNTAX**
 ```yaml
@@ -210,6 +218,13 @@ env:
         configMapKeyRef:
           name: configMap name
           key: key-name
+```
+* by using above syntax our code gets incresed by more no of lines
+* to avide this configmaps provide other future for it as shown in below
+```yaml
+envFrom:
+  - configMapRef:
+    name: <configmap-name>
 ```
 * **genral kubernetes syntax**
 ```yaml
