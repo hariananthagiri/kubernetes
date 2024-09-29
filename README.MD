@@ -62,7 +62,11 @@ kubectl delete -f <your.yamlfile>
 kubectl get <pod_name> -n <namespace_name>
 kubectl get pods -n <namespace_name>
 ```
-* to login to specific container use below command
+* to login to single container use below command
+```
+kubectl exec -it <pod-name> -- bash
+```
+* to login to specific container if we have muliple containers use below command
 ```
 kubectl exec -it <pod-name> -c <container_name> -- bash
 ```
@@ -115,14 +119,14 @@ containers: # list of containers
     command: ["sleep","100"]
 ```
 4. labels
-* it is used to select other kubernetes resources
+  * it is used to select other kubernetes resources
 5. annotation
-* annotaions ==> no limit on length and special charecters also can be used...
-* **labels vs annotaions**
-    * labels ==> have some limitation on the length and charecters of key and values
-    * annotaions ==> no limit on length and special charecters also can be used...
-    * labels are used to select other kubernetes resources.
-    * annotaions are used to select external resources to kubernetes.
+  * annotaions ==> no limit on length and special charecters also can be used...
+  * **labels vs annotaions**
+      * labels ==> have some limitation on the length and charecters of key and values
+      * annotaions ==> no limit on length and special charecters also can be used...
+      * labels are used to select other kubernetes resources.
+      * annotaions are used to select external resources to kubernetes.
 * **syntax**
 ```yaml
 apiVersion: v1  # mostly it is v1
@@ -134,6 +138,19 @@ metadata: # it is nothing but information
     value: "give-value"
   annotation:
     jenkinsurl: "https://jenkins.com"  
+```
+6. env
+* we can use these environment variables with in the container
+* go to the container and apply **env** command to see all stored env variables
+```yaml
+spec:
+  # list of containers
+  containers:
+  - name: hello-pod
+    image: nginx
+    env:
+    - name: DEMO GRRETING
+      value: "hello from the environment"
 ```
 * **genral kubernetes syntax**
 ```yaml
@@ -154,6 +171,9 @@ spec:
   - name: container-2 # container2
     image: almalinux:8 
     command: ["sleep","100"]
+    env:
+    - name: DEMO GRRETING
+      value: "hello from the environment"
 ```
 * **where**
     1. image
@@ -170,3 +190,16 @@ image: <url>/<image:version>
   ```- containerPort```
   * in apiVersion **V** is capital
   ```apiVersion```
+
+
+#### EKSCTL
+* eks is amazon elastic kubernetes service
+* it is nothing but eks control
+* we can create eks cluster by using below command
+```
+eksctl create cluster --config-file=your.yamlfile
+```
+* we can delete eks cluster by using below command
+```
+eksctl delete cluster --config-file=your.yamlfile
+```
