@@ -84,6 +84,7 @@ kind: Namespace
 metadata: # it is nothing but information
   name: hello-pod
 ```
+
 2. PODs
     * In Kubernetes, a "pod" is the smallest and most basic unit of deployment.It represents a single instance of a running process within the cluster.
     * A pod encapsulates one or more containers, storage resources, network configurations, and other options required to run a specific set of containers together.
@@ -104,7 +105,72 @@ metadata: # it is nothing but information
 * VM --> 2GB 2CPU --> resources are blocked irrespective of usage
 * containerisation --> containers don't block resources, they are used dynamically
 * we can restrict the resources consumed by containers...
+**NOTE**
+  * in pod we use configmap and secretes by using env 
+
+3. spec
+    * it is nothing but specifications
+    * it gives the information about our pod 
+    * to login to a specific container use below command
+```yaml
+apiVersion: v1  # mostly it is v1
+kind: Pod
+metadata: # it is nothing but information
+  name: hello-pod
+spec:
+containers: # list of containers      
+- name: container-1 # container1
+    image: nginx 
+    ports:
+    - containerPort: 80
+- name: container-2 # container2
+    image: almalinux:8 
+    command: ["sleep","100"]
+```
+
+4. labels
+  * it is used to select other kubernetes resources
+
+5. annotation
+  * annotaions ==> no limit on length and special charecters also can be used...
+  * **labels vs annotaions**
+      * labels ==> have some limitation on the length and charecters of key and values
+      * annotaions ==> no limit on length and special charecters also can be used...
+      * labels are used to select other kubernetes resources.
+      * annotaions are used to select external resources to kubernetes.
 * **syntax**
+```yaml
+apiVersion: v1  # mostly it is v1
+kind: Pod
+metadata: # it is nothing but information
+  name: labels-demo
+  labels:   
+    key: <key-name>
+    value: "give-value"
+  annotation:
+    jenkinsurl: "https://jenkins.com"  
+```
+
+6. env
+* we can use these environment variables with in the container
+* go to the container and apply **env** command to see all stored env variables
+```yaml
+spec:
+  # list of containers
+  containers:
+  - name: hello-pod
+    image: nginx
+    env:
+    - name: DEMO GRRETING
+      value: "hello from the environment"
+```
+
+7. resources
+  * to reques the cpu and memory we use it
+  * we contains two types here requests and limits
+  * **requests** is soft reuest **limit** it is heard request both will have memory and cpu options
+  * **LIMIT >= REQUEST**
+  * **syntax**
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -129,66 +195,7 @@ spec:
 * where mb is known as mi here
 * limit is always greter than or equal to request [limit >= request]
 
-
-3. spec
-    * it is nothing but specifications
-    * it gives the information about our pod 
-    * to login to a specific container use below command
-```yaml
-apiVersion: v1  # mostly it is v1
-kind: Pod
-metadata: # it is nothing but information
-  name: hello-pod
-spec:
-containers: # list of containers      
-- name: container-1 # container1
-    image: nginx 
-    ports:
-    - containerPort: 80
-- name: container-2 # container2
-    image: almalinux:8 
-    command: ["sleep","100"]
-```
-4. labels
-  * it is used to select other kubernetes resources
-5. annotation
-  * annotaions ==> no limit on length and special charecters also can be used...
-  * **labels vs annotaions**
-      * labels ==> have some limitation on the length and charecters of key and values
-      * annotaions ==> no limit on length and special charecters also can be used...
-      * labels are used to select other kubernetes resources.
-      * annotaions are used to select external resources to kubernetes.
-* **syntax**
-```yaml
-apiVersion: v1  # mostly it is v1
-kind: Pod
-metadata: # it is nothing but information
-  name: labels-demo
-  labels:   
-    key: <key-name>
-    value: "give-value"
-  annotation:
-    jenkinsurl: "https://jenkins.com"  
-```
-6. env
-* we can use these environment variables with in the container
-* go to the container and apply **env** command to see all stored env variables
-```yaml
-spec:
-  # list of containers
-  containers:
-  - name: hello-pod
-    image: nginx
-    env:
-    - name: DEMO GRRETING
-      value: "hello from the environment"
-```
-7. resources
-  * to reques the cpu and memory we use it
-  * we contains two types here requests and limits
-  * **requests** is soft reuest **limit** it is heard request both will have memory and cpu options
-  * **LIMIT >= REQUEST**
-8. ConfigMap
+8. ConfigMap Of Pod
   * it is used to store the configureation in the form of key value pair
   * to create configmap use below syntax & kubectl create command
 * **SYNTAX**
@@ -209,7 +216,7 @@ kubectl get configmaps
 ```
 kubectl describe configmaps <configmap-name>
 ```
-* to refer the configMap from pod using below syntax
+* to refer the configMap from pod use the below syntax
 * **SYNTAX**
 ```yaml
 env:
@@ -226,7 +233,72 @@ envFrom:
   - configMapRef:
     name: <configmap-name>
 ```
-* **genral kubernetes syntax**
+
+9. Secret Of Pod
+  * it is used to store the confidential or sensitive data secretly like username, password, e.t.c...
+  * to crete secretkeys we use below syntax and kubctl create command
+* **syntax**
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: <secret-key name>
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: YWRtaW4xMjM=
+```
+* where
+  * Opaque - it is nothing but you can not see 
+* by using above syntax our code gets incresed by more no of lines
+* to avide this secret provide other future for it as shown in below
+```yaml
+envFrom:
+    - secretRef:
+        name: <secretkey-name>
+```
+* to refer the secret keys using pod use below syntax
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-pod
+spec:
+  # list of containers
+  containers:
+  - name: secret-pod
+    image: nginx
+    #here with this line port will not be opened, just for information
+    ports:
+    - containerPort: 80
+    envFrom:
+    - secretRef:
+        name: devops-secret
+```
+* we will use base 64 encoded values here 
+* to genrete the usernameand password we use below command
+```
+echo -n "amdin" | base64
+o/p :- YWRtaW4=
+```
+* to decode the values use below command
+```
+echo -n "YWRtaW4=" | base64 --decode
+o/p :- amdin
+```
+* but the above mehod is not secured it was encoded not encrypted
+
+10. Services
+  * if you want to expose pods to other applications or outside we must use services..
+    * expose to other apps or outside world
+    * load balancing
+    * service mesh
+* we have 3 types of services they are:
+  1. Cluster IP   ==> purely internal to kubernets
+  2. NodePort     ==> you can expose to outside world
+  3. LoadBalancer ==> you can expose to outside world
+
+* **Genral Kubernetes Syntax**
 ```yaml
 apiVersion: v1  # mostly it is v1
 kind: Pod
@@ -261,6 +333,9 @@ spec:
         configMapKeyRef:
           name: devops-config
           key: course
+    envFrom:
+    - secretRef:
+        name: devops-secret
 ```
 * **where**
     1. image
@@ -268,7 +343,7 @@ spec:
         * if it is private image we have to push that image to docker hub and then pull it from docker hub
 * to pull the private image from docker hub use below command
 ```
-image: <url>/<image:version>
+image: <url>/<user-name>/<image:version>
 ```
 * **NOTE**
   * In kind first letter must be capital letter [A-Z]
