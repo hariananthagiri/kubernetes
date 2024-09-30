@@ -325,7 +325,7 @@ kubectl get svc (shortcut for service)
 * if we perform above command it gives a cluster-ip but it works with in the kubernetes cluster it is purely internal
 * where
   * selector ==> it specify the service where to get attached 
-    * in selectors we give labele key : key-name, value: key-value in selector option and this source get attached to that lables port
+    * in selectors we give labele key : key-name, value: key-value in selector option and this source get attached to that lables pod
   * service port ==> user defind port we can give what ever we want
   * target port ==> it is nothing but container-port 
   * if anyone hits the service port in port-no:80 it send the request to container port or target-port of port-no:80 
@@ -337,12 +337,43 @@ kubectl get svc (shortcut for service)
     * ClusterIP is a subset of NodePort
     * you can expose to outside world
   3. LoadBalancer
+    * NodePort is a subset of LoadBalancer
     * you can expose to outside world
 * **NOTE**
   * By using type we can decide which type of service we want
   * if we wont specify type component by default it takes ClusterIP
 ```
 type: ClusterIP/NodePort/LoadBalancer
+```
+
+11. Sets
+  1. ReplicaSet
+  * it is a set of pods to create multiple pods at a time we use ReplicaSet
+  * to crete a ReplicaSet use below syntax
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-rs
+  labels:
+    app: nginx
+    tier: frontend
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector: # replica-set labels
+    matchLabels:
+      app: nginx
+      tier: frontend
+  template: # pod-definition
+    metadata:
+      labels:
+        app: nginx
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:mainline-alpine3.18-perl
 ```
 
 * **Genral Kubernetes Syntax**
