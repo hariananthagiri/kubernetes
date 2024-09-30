@@ -31,7 +31,10 @@ kubectl
 ```
 kubectl get nodes
 ```
-* kubernetes contains lot o resources
+* kubernetes contains lot of components to see all existing components use below command
+```
+kubectl get <component-name>
+```
 * to see all the existing namespaces use below command
 ```
 kubectl get namespaces
@@ -289,14 +292,58 @@ o/p :- amdin
 * but the above mehod is not secured it was encoded not encrypted
 
 10. Services
+  * it used to communicate with pod
+  * to achive pod to pod communications we use services
+  * lables are very usefull components in kubernetes they are used as selecters 
+  * we use lables to connect with services
   * if you want to expose pods to other applications or outside we must use services..
     * expose to other apps or outside world
     * load balancing
     * service mesh
+  * To create services use below syntax
+* **SYNTAX**
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: ClusterIP/NodePort/LoadBalancer
+  selector:
+    app: nginx
+    demo: service
+  ports:
+  - protocol: TCP
+    port: 80 #service-port
+    targetPort: 80 #container-port
+```
+* to see the services available use below command
+```
+kubectl get services
+kubectl get svc (shortcut for service)
+```
+* if we perform above command it gives a cluster-ip but it works with in the kubernetes cluster it is purely internal
+* where
+  * selector ==> it specify the service where to get attached 
+    * in selectors we give labele key : key-name, value: key-value in selector option and this source get attached to that lables port
+  * service port ==> user defind port we can give what ever we want
+  * target port ==> it is nothing but container-port 
+  * if anyone hits the service port in port-no:80 it send the request to container port or target-port of port-no:80 
 * we have 3 types of services they are:
-  1. Cluster IP   ==> purely internal to kubernets
-  2. NodePort     ==> you can expose to outside world
-  3. LoadBalancer ==> you can expose to outside world
+  1. ClusterIP
+    * purely internal to kubernets
+    * by default it takes cluster-ip
+  2. NodePort
+    * ClusterIP is a subset of NodePort
+    * you can expose to outside world
+  3. LoadBalancer
+    * you can expose to outside world
+* **NOTE**
+  * By using type we can decide which type of service we want
+  * if we wont specify type component by default it takes ClusterIP
+```
+type: ClusterIP/NodePort/LoadBalancer
+```
 
 * **Genral Kubernetes Syntax**
 ```yaml
