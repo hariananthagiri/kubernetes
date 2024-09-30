@@ -375,7 +375,63 @@ spec:
       - name: nginx
         image: nginx:mainline-alpine3.18-perl
 ```
+* to see all existing ReplicaSet use below command
+```
+kubectl get replicaset
+kubectl get rs (shortcut ReplicaSet)
+```
+* name for ReplicaSet is given in below formate
+```
+ReplicaSet-<random-id>
+```
+* **NOTE**
+* ReplicaSet is not usefull in the changeing or updateing the version of the application it is used only to maintain the replicas to overcome this we have a component called **Deployment**
+* cluster-ip < node-port < load-balancer
+* pod < replicaset < deployment
 
+  2. Deployment
+    * pod and replicasets are subsets of deployment
+    * genrally it is known as deployment-set
+    * it is used to update the app version dynamically
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+    demo: deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+      demo: deployment
+  template:
+    metadata:
+      labels:
+        app: nginx
+        demo: deployment
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+    demo: deployment
+  ports:
+  - protocol: TCP
+    port: 80 #service-port
+    targetPort: 80 #container-port
+```
 * **Genral Kubernetes Syntax**
 ```yaml
 apiVersion: v1  # mostly it is v1
@@ -430,7 +486,7 @@ image: <url>/<user-name>/<image:version>
   ```- containerPort```
   * in apiVersion **V** is capital
   ```apiVersion```
-
+* **NAMESPACE ===> PODS ===> CONTAINERS**
 
 #### EKSCTL
 * eks is amazon elastic kubernetes service
