@@ -362,10 +362,10 @@ kubectl get svc (shortcut for service)
 type: ClusterIP/NodePort/LoadBalancer
 ```
 
-11. Sets
-  1. ReplicaSet
-    * it is a set of pods to create multiple pods at a time we use ReplicaSet
-    * to crete a ReplicaSet use below syntax
+* **Sets**
+11. ReplicaSet
+  * it is a set of pods to create multiple pods at a time we use ReplicaSet
+  * to crete a ReplicaSet use below syntax
 ```yaml
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -412,10 +412,10 @@ matchLabels:
 * cluster-ip < node-port < load-balancer
 * pod < replicaset < deployment
 
-  2. Deployment
-    * pod and replicasets are subsets of deployment
-    * genrally it is known as deployment-set
-    * it is used to update the app version dynamically
+12. Deployment
+  * pod and replicasets are subsets of deployment
+  * genrally it is known as deployment-set
+  * it is used to update the app version dynamically
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
