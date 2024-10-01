@@ -252,8 +252,34 @@ envFrom:
   - configMapRef:
     name: <configmap-name>
 ```
+* we can also mount a file using configmap instad of passing key value pair
+* give a key and entire file data has value 
+  ```key-name: file_data```
+* to do that we have to mount the data to valumes
+9. valumes
+  * we have to cretev a valume at containers level 
+  * we can mount this valumes all the containers available if we want to mount
+  * to create valumes use below syntax
+```yaml
+containers:
+  - name: web
+    image: joindevops/web:v1
+    imagePullPolicy: Always
+    volumeMounts:
+    - name: nginx-conf
+      mountPath: /etc/nginx/nginx.conf
+      subPath: nginx.conf
+      readOnly: true
+  volumes:
+  - name: nginx-conf
+    configMap:
+      name: web
+      items:
+        - key: nginx.conf
+          path: nginx.conf
+```
 
-9. Secret Of Pod
+10. Secret Of Pod
   * it is used to store the confidential or sensitive data secretly like username, password, e.t.c...
   * to crete secretkeys we use below syntax and kubctl create command
 * **syntax**
@@ -307,7 +333,7 @@ o/p :- amdin
 ```
 * but the above mehod is not secured it was encoded not encrypted
 
-10. Services
+11. Services
   * it used to communicate with pod
   * to achive pod to pod communications we use services
   * lables are very usefull components in kubernetes they are used as selecters 
@@ -363,7 +389,7 @@ type: ClusterIP/NodePort/LoadBalancer
 ```
 
 * **Sets**
-11. ReplicaSet
+12. ReplicaSet
   * it is a set of pods to create multiple pods at a time we use ReplicaSet
   * to crete a ReplicaSet use below syntax
 ```yaml
@@ -412,7 +438,7 @@ matchLabels:
 * cluster-ip < node-port < load-balancer
 * pod < replicaset < deployment
 
-12. Deployment
+13. Deployment
   * pod and replicasets are subsets of deployment
   * genrally it is known as deployment-set
   * it is used to update the app version dynamically
@@ -538,4 +564,9 @@ eksctl delete cluster --config-file=your.yamlfile
 spec:
   containers:
     imagePullPolicy: Always/Never/IfNotPresent
+```
+* **NOTE**
+  * when we use telnet command to come out of it use below command
+```
+ctrl + ]
 ```
