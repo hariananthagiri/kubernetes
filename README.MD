@@ -64,6 +64,9 @@ kubectl delete -f <your.yamlfile>
 ```
 kubectl get <pod_name> -n <namespace_name>
 kubectl get pods -n <namespace_name>
+* to overcome above problem install kubens
+* after installing kubens use below command to change and set a new default namespace
+  kubens <namesace-name>
 ```
 * to login to single container use below command
 ```
@@ -103,6 +106,15 @@ kind: Pod
 metadata: # it is nothing but information
   name: hello-pod
 ```
+* to create pod in specific namespace use below syntax
+```yaml
+apiVersion: v1  # mostly it is v1
+kind: Pod
+metadata: # it is nothing but information
+  name: hello-pod
+  namespace: roboshop
+  ```
+  * if we won't mention it is created in default namespace
 * **RESOURCES IN POD**
 * VM vs containerisation
 * VM --> 2GB 2CPU --> resources are blocked irrespective of usage
@@ -384,6 +396,13 @@ kubectl get rs (shortcut ReplicaSet)
 ```
 ReplicaSet-<random-id>
 ```
+* **matchLabels**
+  * it is used to match with other lables it compires two different labels
+  * the condition here is the reference and matchLabels must be same if not it through an error if matchLabels and reference lables are not same
+```yaml
+matchLabels:
+  key:value
+```
 * **NOTE**
 * ReplicaSet is not usefull in the changeing or updateing the version of the application it is used only to maintain the replicas to overcome this we have a component called **Deployment**
 * cluster-ip < node-port < load-balancer
@@ -498,4 +517,21 @@ eksctl create cluster --config-file=your.yamlfile
 * we can delete eks cluster by using below command
 ```
 eksctl delete cluster --config-file=your.yamlfile
+```
+###### IMAGE PULL POLICY
+1. **IfNotPresent**
+  * the image is pulled locally only if it is not alrady present locally
+  * if the image is not exist in the node then only it will pull if it exist then it won't pull
+
+2. **Always**
+  * if the image exist or doesn't exist in the node it doesn't matter everytime it pull the image irrespective of presence of image
+  * it is recommended to give Always
+3. **Never**
+    * if the image exist or doesn't exist in the node it doesn't matter everytime it won't pull the image irrespective of presence of image
+    * it wont pull the image
+* **SYNTAX**
+```yaml
+spec:
+  containers:
+    imagePullPolicy: Always/Never/IfNotPresent
 ```
