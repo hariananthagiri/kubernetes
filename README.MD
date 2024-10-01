@@ -80,6 +80,10 @@ kubectl exec -it <pod-name> -c <container_name> -- bash
 ```
 kubectl describe pod <pod-name> 
 ```
+* to see the ful information of pods like name, ip-address, nodes, 
+```
+kubectl get pod -o wide
+```
 ##### Workload components
 1. Namespace
     * it is like a project in your kubernetes cluster to provision your project resources. it is isolated 
