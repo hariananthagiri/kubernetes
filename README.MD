@@ -364,8 +364,8 @@ type: ClusterIP/NodePort/LoadBalancer
 
 11. Sets
   1. ReplicaSet
-  * it is a set of pods to create multiple pods at a time we use ReplicaSet
-  * to crete a ReplicaSet use below syntax
+    * it is a set of pods to create multiple pods at a time we use ReplicaSet
+    * to crete a ReplicaSet use below syntax
 ```yaml
 apiVersion: apps/v1
 kind: ReplicaSet
