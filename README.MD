@@ -116,7 +116,7 @@ apiVersion: v1  # mostly it is v1
 kind: Pod
 metadata: # it is nothing but information
   name: hello-pod
-  namespace: roboshop
+  namespace:  <namespace-name>
   ```
   * if we won't mention it is created in default namespace
 * **RESOURCES IN POD**
