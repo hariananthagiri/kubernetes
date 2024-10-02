@@ -275,11 +275,12 @@ env:
     configMapKeyRef:
       name: configMap-name
       key: key-name1
-- name: course2 # user defined name you casn can as you like
+- name: course2 # user defined name you casn can as you like refereing key2
   valueFrom:
     configMapKeyRef:
       name: configMap-name
       key: key-name2
+# in the same way if i pass 10 key values the gode get incresed to avide that use below syntax
 ```
 * by using above syntax our code gets incresed by more no of lines
 * to avide this configmaps provide other future for it as shown in below
