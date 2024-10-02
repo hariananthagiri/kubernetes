@@ -272,7 +272,7 @@ kubectl describe configmap <configmap-name>
 env:
 - name: course1 # user defined name you casn can as you like
   valueFrom:
-    configMapKeyRef:
+    configMapKeyRef: # M, K, R are capital
       name: configMap-name
       key: key-name1
 - name: course2 # user defined name you casn can as you like refereing key2
