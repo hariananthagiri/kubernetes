@@ -241,7 +241,7 @@ spec:
         cpu: "200m"
         memory: "128Mi"
 ```
-* where mb is known as mi here
+* where mb is known as Mi here and m is for microns in Mi m mut be capital
 * limit is always greter than or equal to request [limit >= request]
 
 8. ConfigMap Of Pod
@@ -252,10 +252,11 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: devops-config
+  name: <configmap-name>
 data:
-  course: DevOps
-  trainer: "SivakumarReddy"
+  key1: "value1"
+  key2: "value2"
+  key3: "value3"
 ```
 * to see the available configmaps use below command
 ```
@@ -565,6 +566,7 @@ image: <url>/<user-name>/<image:version>
   ```- containerPort```
   * in apiVersion **V** is capital
   ```apiVersion```
+  * most of the components and commands are ends with **s**
 * **NAMESPACE ===> PODS ===> CONTAINERS**
 
 #### EKSCTL
