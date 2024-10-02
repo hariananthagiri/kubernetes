@@ -264,17 +264,22 @@ kubectl get configmaps
 ```
 * to inspect or describe configmaps use below command
 ```
-kubectl describe configmaps <configmap-name>
+kubectl describe configmap <configmap-name>
 ```
 * to refer the configMap from pod use the below syntax
 * **SYNTAX**
 ```yaml
 env:
-    - name: course # user defined name you casn can as you like
-      valueFrom:
-        configMapKeyRef:
-          name: configMap name
-          key: key-name
+- name: course1 # user defined name you casn can as you like
+  valueFrom:
+    configMapKeyRef:
+      name: configMap-name
+      key: key-name1
+- name: course2 # user defined name you casn can as you like
+  valueFrom:
+    configMapKeyRef:
+      name: configMap-name
+      key: key-name2
 ```
 * by using above syntax our code gets incresed by more no of lines
 * to avide this configmaps provide other future for it as shown in below
