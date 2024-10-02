@@ -101,6 +101,7 @@ metadata: # it is nothing but information
     * Pods are typically created and managed using higher- level abstractions such as Deployments, ReplicaSets, or StatefulSets, which provide additional features like scaling, rolling updates, and self-healing capabilities.
     * Pods provide several benefits, including resource isolation, flexible deployment strategies, easy scaling, and enhanced reliability.
     * it is a space where your containers will run
+    * pod name must be uniq if we use same name it through an error
     * **pod Vs container** 
     * A pod can contain multiple containers, it is the smallest thing in kuberenetes
     * pod is a collection of containers
@@ -149,9 +150,38 @@ containers: # list of containers
 
 4. labels
   * it is used to select other kubernetes resources
+  * lables are used in matadata section
+* use below syntax for lables
+```yaml
+lables:
+key: <key-name>
+value: "<key-value>"
+```
+* to provide multiple lables use below syntax
+```yaml
+lables:
+key1: "<value1>"
+key2: "<value2>"
+```
+* to known the full information of a label use below command
+```
+kubectl describe pod <pod-name> 
+```
 
-5. annotation
+5. annotations
   * annotaions ==> no limit on length and special charecters also can be used...
+  * annotations are used in matadata section
+* use below syntax for annotation
+```yaml
+annotations:
+  key: "value"
+```
+* to provide multiple annotations use below syntax
+```yaml
+annotations:
+  key1: "<value1>"
+  key2: "<value2>"
+```
   * **labels vs annotaions**
       * labels ==> have some limitation on the length and charecters of key and values
       * annotaions ==> no limit on length and special charecters also can be used...
@@ -166,7 +196,7 @@ metadata: # it is nothing but information
   labels:   
     key: <key-name>
     value: "give-value"
-  annotation:
+  annotations:
     jenkinsurl: "https://jenkins.com"  
 ```
 
