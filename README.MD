@@ -391,14 +391,15 @@ metadata:
 spec:
   type: ClusterIP/NodePort/LoadBalancer
   selector:
-    app: nginx
-    demo: service
+    lable1: value1
+    label2: value2
   ports:
   - protocol: TCP
     port: 80 #service-port
     targetPort: 80 #container-port
 ```
 * services starts in spec: section it contains type, selector, and ports 
+* port is list type it contains portocal port and targetport
 * to see the services available use below command
 ```
 kubectl get services
