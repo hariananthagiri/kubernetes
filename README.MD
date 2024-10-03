@@ -619,3 +619,9 @@ containers:
   env:
   - name: list1
 ```
+* to run two different programs in a single code use below syntax 
+```yaml
+pgm1
+---
+pgm2
+```
