@@ -423,7 +423,7 @@ kubectl get svc (shortcut for service)
 kubectl get services
 ```
 * **IMAGE**
-![Uploading Screenshot 2024-10-03 171100.png…]()
+![Uploading Screenshot 2024-10-03 171100.png…]
 
   2. NodePort
     * ClusterIP is a subset of NodePort
