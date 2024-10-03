@@ -610,3 +610,10 @@ spec:
 ```
 ctrl + ]
 ```
+* containers is list type and env is list type 
+```yaml
+containers:
+- name: list1
+  env:
+  - name: list1
+```
