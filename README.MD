@@ -437,15 +437,19 @@ type: ClusterIP/NodePort/LoadBalancer
 ```
 
 * **Sets**
+* basically sets are starts from spec: section 
 12. ReplicaSet
   * it is a set of pods to create multiple pods at a time we use ReplicaSet
-  * to crete a ReplicaSet use below syntax
+  * pod is a subset of ReplicaSet
+  * here lables plays a key role 
+  * the syntax contains two parts replicaset defination  + pod defination
+  * to crete a ReplicaSet use below syntax 
 ```yaml
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: nginx-rs
-  labels:
+    labels:
     app: nginx
     tier: frontend
 spec:
