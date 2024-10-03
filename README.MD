@@ -474,7 +474,7 @@ spec:
 kubectl get replicaset
 kubectl get rs (shortcut ReplicaSet)
 ```
-* name for ReplicaSet is given in below formate
+* name for ReplicaSets which we created using above syntax is created in below formate
 ```
 ReplicaSet-<random-id>
 ```
