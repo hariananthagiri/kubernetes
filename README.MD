@@ -319,7 +319,7 @@ containers:
 10. Secret Of Pod
   * it is used to store the confidential or sensitive data secretly like username, password, e.t.c...
   * to crete secretkeys we use below syntax and kubctl create command
-  * it hads to start stright from matadata section
+  * it has to start stright from matadata section and no spec: section if we give it through an error
 * **syntax**
 ```yaml
 apiVersion: v1
