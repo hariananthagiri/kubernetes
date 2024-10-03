@@ -416,6 +416,15 @@ kubectl get svc (shortcut for service)
   1. ClusterIP
     * purely internal to kubernets
     * by default it takes cluster-ip
+    * when we use clusterip it provides an ip address it will change frequently instad of using that use service-name
+    * we can repalce ip-address with service-name because service-name is perminent it wont change
+  * to get ip-address use below command
+```
+kubectl get services
+```
+* **IMAGE**
+![Uploading Screenshot 2024-10-03 171100.png…]()
+
   2. NodePort
     * ClusterIP is a subset of NodePort
     * you can expose to outside world
