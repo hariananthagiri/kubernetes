@@ -387,7 +387,7 @@ o/p :- amdin
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: <service-name>
 spec:
   type: ClusterIP/NodePort/LoadBalancer
   selector:
@@ -398,6 +398,7 @@ spec:
     port: 80 #service-port
     targetPort: 80 #container-port
 ```
+* services starts in spec: section it contains type, selector, and ports 
 * to see the services available use below command
 ```
 kubectl get services
