@@ -64,9 +64,22 @@ kubectl delete -f <your.yamlfile>
 ```
 kubectl get <pod_name> -n <namespace_name>
 kubectl get pods -n <namespace_name>
-* to overcome above problem install kubens
+```
+* **KUBENS**
+* to overcome above problem of giveing -n  install kubens
+* **INSTALLATION**
+```SH
+#!/bin/bash
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+```
 * after installing kubens use below command to change and set a new default namespace
-  kubens <namesace-name>
+```
+kubens <namesace-name>
+```
+* to go back to the default namespace use below command
+```
+kubens default
 ```
 * to login to single container use below command
 ```
