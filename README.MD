@@ -153,12 +153,12 @@ metadata: # it is nothing but information
 spec:
 containers: # list of containers      
 - name: container-1 # container1
-    image: nginx 
-    ports:
+  image: nginx 
+  ports:
     - containerPort: 80
 - name: container-2 # container2
-    image: almalinux:8 
-    command: ["sleep","100"]
+  image: almalinux:8 
+  command: ["sleep","100"]
 ```
 
 4. labels
@@ -320,7 +320,7 @@ containers:
       mountPath: /etc/nginx/nginx.conf
       subPath: nginx.conf
       readOnly: true
-  volumes:
+    volumes:
   - name: <volume-name>
     configMap:
       name: web
@@ -462,9 +462,9 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: nginx-rs
-    labels:
-    app: nginx
-    tier: frontend
+  labels:
+  app: nginx
+  tier: frontend
 spec:
   # modify replicas according to your case
   replicas: 3
@@ -673,7 +673,7 @@ pgm2
 
 * **FILEBEAT**
 * in sidecar we will have filebeat it is used to ship node logs
-      * **filebeat --> public image from elastic search**
+    * **filebeat --> public image from elastic search**
     * there is some configuration for filebeat i.e i/p and o/p
       * i/p ==> is what logs to access
       * o/p  ==> is where to ship the logs
