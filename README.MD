@@ -646,3 +646,86 @@ pgm2
   * all the components are used in kubernetes are mostly used to provide additional data like lables, annotations, in metadata section
   * remaining components used in spec it contains data element too if it is secret it add type too
   * genrally we give kubernetes files as mainifest.yaml
+
+* **STATEFUL APPLICATIONS**
+  * Application which storage is mandatory are called stateful applications
+
+* **STATELESS APPLICATIONS**
+  * Application which doent have any storage are called stateless applications
+  * stateless applications are not have any storage on there own
+
+* data is getting stored in EC2 worker nodes, nodes are also ephemeral.
+* if you start storeing the crusial data in ec2 worker nodes because they are temparary we may loss the data any time
+* so we should not take the risk of storeing staeful applications data in ec2 worker node in this case we shold have an external storage 
+
+* **FILEBEAT**
+* in sidecar we will have filebeat it is used to ship node logs
+      * **filebeat --> public image from elastic search**
+    * there is some configuration for filebeat i.e i/p and o/p
+      * i/p ==> is what logs to access
+      * o/p  ==> is where to ship the logs
+* firebeat starts from metadata and data section as given in below syntax
+* **SYNTAX**
+```YAML
+data:
+  filebeat.yml: |
+    filebeat:
+      config:
+        modules:
+          path: /usr/share/filebeat/modules.d/*.yml
+          reload:
+            enabled: true
+      modules:
+      - module: nginx
+        access:
+          var.paths: ["/var/log/nginx/access.log*"]
+        error:
+          var.paths: ["/var/log/nginx/error.log*"]
+    output:
+      elasticsearch:
+        hosts: ["elasticsearch:9200"]
+```
+* **K8S VOLUMES**
+* the below two types are stores data in worker nodes or intenal volumes or ephemeral(i.e temparary) volumes
+  1. **emptyDir**
+    * used for sidecar patterns, we mount the volume to sidecar and main container using emptyDir. then sidecar get access to storage
+* **SYNTAX** 
+```YAML
+volumes:
+- name: nginx-logs
+  emptyDir: {}   
+```
+* we just mount that emptyDir volume volume mount name and emptyDir volume name must be same we need to give same name for both volume mount and emptyDir volume
+
+  2. **hostPath**
+    * we need to ship all the worker node logs to external system. 
+  * **DeamonSet**
+    * will make sure a pod runs in each and every node.. fluentd will be deployed as deamonset that can access the underlying host logs and send them to ELK
+    * make sure that your using **namespace: kube-system** we have to use kube-system namespace only because it contains administatory namespace 
+* the syntax for hostpath is given below
+```yaml
+volumes:
+- name: varlog
+  hostPath:
+    path: /var/log
+```
+* the syntax for deamonset is mentioned below
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-logging
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      k8s-app: fluentd-logging
+      version: v1
+```
+* external volumes or persistent volumes
+  1. static provisioning
+  2. dynamic provisioning
+
