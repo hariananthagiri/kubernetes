@@ -303,12 +303,12 @@ containers:
     image: joindevops/web:v1
     imagePullPolicy: Always
     volumeMounts:
-    - name: nginx-conf
+    - name: <volume-name>
       mountPath: /etc/nginx/nginx.conf
       subPath: nginx.conf
       readOnly: true
   volumes:
-  - name: nginx-conf
+  - name: <volume-name>
     configMap:
       name: web
       items:
@@ -494,6 +494,7 @@ matchLabels:
   * pod and replicasets are subsets of deployment
   * genrally it is known as deployment-set
   * it is used to update the app version dynamically
+* **Deployment ==> replicaset ==> pods**  
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -636,3 +637,12 @@ pgm1
 ---
 pgm2
 ```
+* metadata contains labels, annotations, 
+* spec contains containers it is list type, env, rersources, 
+* createing indivusuals i.e configmap which contain data, secret which contains type, data, service, volumes these are list type
+* combineing with pod defination is replicaset, deployment
+* **NOTE**  
+  * the main components in code are apiVersion, kind, metadata, spec
+  * all the components are used in kubernetes are mostly used to provide additional data like lables, annotations, in metadata section
+  * remaining components used in spec it contains data element too if it is secret it add type too
+  * genrally we give kubernetes files as mainifest.yaml
