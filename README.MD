@@ -304,7 +304,15 @@ envFrom:
 ```
 * we can also mount a file using configmap instad of passing key value pair
 * give a key and entire file data has value 
-  ```key-name: file_data```
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <configmap-name>
+data:
+  key-name: |
+    file-data
+```
 * to do that we have to mount the data to valumes
 9. valumes
   * we have to cretev a valume at containers level 
