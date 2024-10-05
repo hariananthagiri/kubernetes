@@ -317,7 +317,29 @@ data:
 9. valumes
   * we have to cretev a valume at containers level 
   * we can mount this valumes all the containers available if we want to mount
-  * to create valumes use below syntax
+* using configmap in volumes 
+```yaml
+volumes:
+- name: nginx-conf
+  configMap:
+    name: web
+    items:
+      - key: nginx.conf
+        path: nginx.conf
+```
+* volumes is list type we can create n no of volumes as above
+
+* to do volumemount use below syntax
+```yaml
+volumeMounts:
+- name: <volume-name>
+  mountPath: /etc/nginx/nginx.conf
+  subPath: nginx.conf
+  readOnly: true
+```
+* volumemount is a list type we can mount n no of volumes like above
+
+* to create valumes and mountvolumes use below syntax
 ```yaml
 containers:
   - name: web
