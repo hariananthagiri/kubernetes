@@ -337,7 +337,8 @@ volumeMounts:
   subPath: nginx.conf
   readOnly: true
 ```
-* volumemount is a list type we can mount n no of volumes like above
+* volumemount is a list type we can mount n no of volumes like above 
+* in mount M must be capital in Path P must be capith in readOnly O must be capital 
 * **volume-name = volumemount-name** they both must have same name
 * to create valumes and mountvolumes use below syntax
 ```yaml
