@@ -798,7 +798,7 @@ spec:
 2. EFS (Elastic File System)
   * it is like nfs or drive
 * external volumes or persistent volumes
-* **prerequires**
+* **prerequisites**
 * we need to make this volume available to k8 cluster. we should install drivers. 
   * aws-ebs-csi drivers should be installed
   * a proper role should be attached to ec2 instance to access EBS.
