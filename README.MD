@@ -180,6 +180,10 @@ key2: "<value2>"
 ```
 kubectl describe pod <pod-name> 
 ```
+* to see all the labels available use below command
+```
+kubectl get pods --show-labels
+```
 
 5. annotations
   * annotaions ==> no limit on length and special charecters also can be used...
@@ -340,6 +344,12 @@ volumeMounts:
 * volumemount is a list type we can mount n no of volumes like above 
 * in mount M must be capital in Path P must be capith in readOnly O must be capital in syntax
 * **volume-name = volumemount-name** they both must have same name
+* **ACCESS MODES**
+1. readOnly 
+2. ReadWriteOnly
+3. ReadWriteOnce
+4. ReadWriteMany
+5. ReadWritePod
 * to create valumes and mountvolumes use below syntax
 ```yaml
 containers:
@@ -769,7 +779,66 @@ spec:
       k8s-app: fluentd-logging
       version: v1
 ```
+* **ACCESS MODES**
+1. readOnly 
+2. ReadWriteOnly
+3. ReadWriteOnce
+4. ReadWriteMany
+5. ReadWritePod
+
+* we have two types of storage systems in AWS 
+  1. EBS (Elastic Block Store)
+  2. EFS (Elastic File System)
+1. EBS (Elastic Block Store)
+  * it is like hard disk
+  * while createing volumes in aws the rule is valume is completely depends on server available zone
+  * EBS volume in ZONE specific
+    * **VOLUME = SERVER AZ**
+  * EBS uses only **ReadWriteOnce** mounting access mode only because it is hard disk
+2. EFS (Elastic File System)
+  * it is like nfs or drive
 * external volumes or persistent volumes
-  1. static provisioning
-  2. dynamic provisioning
+* these are perminent volumes
+1. static provisioning
+  * first we need to create storage, either storage admin or k8 admin will create the storage
+  * we need to make this volume available to k8 cluster. we should install drivers. 
+  * aws-ebs-csi drivers should be installed
+  * a proper role should be attached to ec2 instance to access EBS.
+* **Drivers installation**
+  * search kubernetes volumes on chrome click on volumes option 
+  * now search for ebs click on ebs driver third party application
+  * you goto an git hub account then go to documentation and click on drivers installation
+  * there is an option called Kustomize it contain below command
+```
+kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.35"
+```
+* aws-ebs-csi drivers should be installed
+* **kubernetes volume objects/resources**
+  * **persistant volume(PV)**        ==> it represents the external storage. it is like a raper on volume
+  * **persistant volume claim(PVC)** ==> pods should request volume through pvc. we pod requied storage they need to claim
+* **NOTE**
+* EBS volume in ZONE specific our is pod is created in any of working node 
+* if i have 3 working nodes one node is in 1a and other node is in 1b and last node is in 1c 
+* my vm in in 1a zone i need to create the volume in 1a zone only if not it through an error but now pod may create in any of the worker node
+* in this case we have to control that pod have to create in our requied region to control this in kubernetes we have a component called **kubecontroler**
+* **kubecontroler** decide pod has to create in which working node 
+* TO OVERCOME THIS we have to use **nodeSelector**
+* **nodeSelector**
+  * to is used to control where our pod should go
+  * to do this we have to **LABEL OUR NODES** 
+```
+kubectl get nodes (to see pod-names)
+kubectl label nodes <pod-name> key-name=value
+```
+* now to mention which node to use using nodeSelector use below command
+```yaml
+nodeSelector:
+  key-name: value # what we labeled using above command
+```
+* nodeSelector used in spec section
+* it is the basic option
+
+2. dynamic provisioning
+  * volume should be created automatically
+
 
