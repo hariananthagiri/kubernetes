@@ -332,13 +332,13 @@ volumes:
 * to do volumemount use below syntax
 ```yaml
 volumeMounts:
-- name: <volume-name>
+- name: <volumemount-name>
   mountPath: /etc/nginx/nginx.conf
   subPath: nginx.conf
   readOnly: true
 ```
 * volumemount is a list type we can mount n no of volumes like above
-
+* **volume-name = volumemount-name** they both must have same name
 * to create valumes and mountvolumes use below syntax
 ```yaml
 containers:
