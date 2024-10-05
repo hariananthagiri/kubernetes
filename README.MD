@@ -798,6 +798,19 @@ spec:
 2. EFS (Elastic File System)
   * it is like nfs or drive
 * external volumes or persistent volumes
+* **prerequires**
+* we need to make this volume available to k8 cluster. we should install drivers. 
+  * aws-ebs-csi drivers should be installed
+  * a proper role should be attached to ec2 instance to access EBS.
+* **Drivers installation**
+  * search kubernetes volumes on chrome click on volumes option 
+  * now search for ebs click on ebs driver third party application
+  * you goto an git hub account then go to documentation and click on drivers installation
+  * there is an option called Kustomize it contain below command
+```
+kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.35"
+```
+* aws-ebs-csi drivers should be installed
 * these are perminent volumes
 1. static provisioning
   * first we need to create storage, either storage admin or k8 admin will create the storage
@@ -839,6 +852,13 @@ nodeSelector:
 * it is the basic option
 
 2. dynamic provisioning
-  * volume should be created automatically
+  * volume should be created automatically.
+  * there is another object called storageClass that can create storage dynamically based on the request.
+  * here external volume and pv would be created automatically by storageClass...
+* to see all the storage classes use below command
+```
+kubectl get sc
+```
+
 
 
