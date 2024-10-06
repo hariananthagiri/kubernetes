@@ -827,8 +827,65 @@ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernete
 ```
 * aws-ebs-csi drivers should be installed
 * **kubernetes volume objects/resources**
-  * **persistant volume(PV)**        ==> it represents the external storage. it is like a raper on volume
-  * **persistant volume claim(PVC)** ==> pods should request volume through pvc. we pod requied storage they need to claim
+1. **persistant volume(PV)**        
+  * it represents the external storage. it is like a raper on volume
+* **SYNTAX**
+```YAML
+# persistence volume creation
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ebs-static
+spec:
+  accessModes:
+  - ReadWriteOnce #EBS volume should have readwriteonce, because it HD.
+  capacity:
+    storage: 10Gi
+  csi:
+    driver: ebs.csi.aws.com
+    fsType: ext4
+    volumeHandle: vol-095b046ae862ee1ff
+```
+2. **persistant volume claim(PVC)** 
+  * pods should request volume through pvc. we pod requied storage they need to claim
+```YAML
+# Persistent Volume Claim creation
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-static
+spec:
+  storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set. for static provisioning this is empty
+  volumeName: ebs-static
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```
+* Attaching pvc to the pod use below syntax
+```yaml
+# attaching static-pvc to pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  labels:
+    demo: ebs-static
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: nginx-data
+      mountPath: /usr/share/nginx/html
+  nodeSelector:
+    zone: 1b
+  volumes:
+  - name: nginx-data
+    persistentVolumeClaim:
+      claimName: ebs-static
+```
 * **NOTE**
 * EBS volume in ZONE specific our is pod is created in any of working node 
 * if i have 3 working nodes one node is in 1a and other node is in 1b and last node is in 1c 
@@ -855,7 +912,8 @@ nodeSelector:
   * volume should be created automatically.
   * there is another object called storageClass that can create storage dynamically based on the request.
   * here external volume and pv would be created automatically by storageClass...
-* to see all the storage classes use below command
+  * since storageClass is cluster level resource, admins should create this.
+  * to see all the storage classes use below command
 ```
 kubectl get sc
 ```
