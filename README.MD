@@ -936,7 +936,10 @@ volumeBindingMode: WaitForFirstConsumer
 ```
 * **where**
   * provisioner ==> it is used to supply drivers
-  * 
+  * **reclaimPolicy**
+    * delete ==> if pod is deleted volume also gets deleted
+    * retain ==> if pod is deleted volume is not gets deleted
+    * default option is delete
 * to see all the storage classes use below command
 ```
 kubectl get sc
