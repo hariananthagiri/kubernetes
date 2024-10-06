@@ -786,9 +786,14 @@ spec:
 4. ReadWriteMany
 5. ReadWritePod
 
+* **STORAGE**
 * we have two types of storage systems in AWS 
   1. EBS (Elastic Block Store)
+    1. Static ebs
+    2. dynamic ebs
   2. EFS (Elastic File System)
+    1. Static efs
+    2. dynamic efs
 1. **EBS (Elastic Block Store)**
   * it is like hard disk
   * while createing volumes in aws the rule is valume is completely depends on server available zone
@@ -887,7 +892,7 @@ spec:
     persistentVolumeClaim:
       claimName: ebs-static
 ```
-* **POD ===> PVC ===> PV**
+* **POD ===> PVC ===> PV ==> STORAGE**
 * **NOTE**
 * EBS volume in ZONE specific our is pod is created in any of working node 
 * if i have 3 working nodes one node is in 1a and other node is in 1b and last node is in 1c 
@@ -942,9 +947,11 @@ kubectl get sc
   * the resources created in the namespace
 2. **non-namespace resource** 
   * the resource created without namespace i.e cluster level resource
-* to see the all resources we use below command
+* to see the all namespace and non-namespace resources use below command
 ```
 kubectl api-resources 
 ```
-
+* **NOTE**
+* persistent volume is the physical thing
+* persistent volume claim is the request
 
