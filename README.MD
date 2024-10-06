@@ -789,7 +789,7 @@ spec:
 * we have two types of storage systems in AWS 
   1. EBS (Elastic Block Store)
   2. EFS (Elastic File System)
-1. EBS (Elastic Block Store)
+1. **EBS (Elastic Block Store)**
   * it is like hard disk
   * while createing volumes in aws the rule is valume is completely depends on server available zone
   * EBS volume in ZONE specific
@@ -813,7 +813,7 @@ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernete
 * aws-ebs-csi drivers should be installed
 * these are perminent volumes
 1. static provisioning
-  * first we need to create storage, either storage admin or k8 admin will create the storage
+  * first we need to create storage or volume, either storage admin or k8 admin will create the storage
   * we need to make this volume available to k8 cluster. we should install drivers. 
   * aws-ebs-csi drivers should be installed
   * a proper role should be attached to ec2 instance to access EBS.
@@ -829,6 +829,7 @@ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernete
 * **kubernetes volume objects/resources**
 1. **persistant volume(PV)**        
   * it represents the external storage. it is like a raper on volume
+  * create a volume and copy its volume id
 * **SYNTAX**
 ```YAML
 # persistence volume creation
@@ -907,8 +908,9 @@ nodeSelector:
 ```
 * nodeSelector used in spec section
 * it is the basic option
+* **where pod is created? ===> pod is created in working nodes**
 
-2. dynamic provisioning
+2. **dynamic provisioning**
   * volume should be created automatically.
   * there is another object called storageClass that can create storage dynamically based on the request.
   * here external volume and pv would be created automatically by storageClass...
