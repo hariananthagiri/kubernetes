@@ -914,12 +914,37 @@ nodeSelector:
 2. **dynamic provisioning**
   * volume should be created automatically.
   * there is another object called storageClass that can create storage dynamically based on the request.
-  * here external volume and pv would be created automatically by storageClass...
+  * here external volume and pv would be created automatically by storageClass..
+* **STORAGECLASS**
+  * here external volume and pv would be created automatically by storageClass.
   * since storageClass is cluster level resource, admins should create this.
-  * to see all the storage classes use below command
+  * use below syntax to create storage class
+  * **SYNTAX**
+```YAML
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
+```
+* **where**
+  * provisioner ==> it is used to supply drivers
+  * 
+* to see all the storage classes use below command
 ```
 kubectl get sc
 ```
-
+* in kubernetes we have two types of resources
+  1. namespace resource
+  2. non-namespace resource
+1. **namespace resource**
+  * the resources created in the namespace
+2. **non-namespace resource** 
+  * the resource created without namespace i.e cluster level resource
+* to see the all resources we use below command
+```
+kubectl api-resources 
+```
 
 
