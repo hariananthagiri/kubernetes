@@ -959,3 +959,6 @@ kubectl api-resources
 * persistent volume is the physical thing
 * persistent volume claim is the request
 
+2. EFS (Elastic File System)
+
+
