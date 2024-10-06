@@ -845,7 +845,7 @@ spec:
   csi:
     driver: ebs.csi.aws.com
     fsType: ext4
-    volumeHandle: vol-095b046ae862ee1ff
+    volumeHandle: vol-0da1eaeda19787d1b
 ```
 2. **persistant volume claim(PVC)** 
   * pods should request volume through pvc. we pod requied storage they need to claim
@@ -887,6 +887,7 @@ spec:
     persistentVolumeClaim:
       claimName: ebs-static
 ```
+* **POD ===> PVC ===> PV**
 * **NOTE**
 * EBS volume in ZONE specific our is pod is created in any of working node 
 * if i have 3 working nodes one node is in 1a and other node is in 1b and last node is in 1c 
