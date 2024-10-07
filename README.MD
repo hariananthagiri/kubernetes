@@ -815,7 +815,7 @@ spec:
   * aws-ebs-csi drivers should be installed
   * a proper role should be attached to ec2 instance to access EBS.
 
-* **BBS Drivers installation**
+* **EBS Drivers installation**
   * search aws ebs csi drivers on chrome
   * you can see a git hub account then go to documentation and click on drivers installation
   * there is an option called Kustomize it contain below command
@@ -858,7 +858,7 @@ spec:
     storage: 10Gi
   csi:
     driver: ebs.csi.aws.com
-    fsType: ext4
+    fsType: ext4 # (file system)
     volumeHandle: vol-0da1eaeda19787d1b
 ```
 2. **persistant volume claim(PVC)** 
