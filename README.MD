@@ -805,7 +805,7 @@ spec:
 * we need to make this volume available to k8 cluster. we should install drivers. 
   * aws-ebs-csi drivers should be installed
   * a proper role should be attached to ec2 instance to access EBS.
-  
+
 * **BBS Drivers installation**
   * search aws ebs csi drivers on chrome
   * you can see a git hub account then go to documentation and click on drivers installation
@@ -917,6 +917,7 @@ nodeSelector:
 2. **dynamic provisioning**
   * volume should be created automatically.
   * there is another object called storageClass that can create storage dynamically based on the request.
+  * for dynamic we install storage class
   * here external volume and pv would be created automatically by storageClass..
 * **STORAGECLASS**
   * here external volume and pv would be created automatically by storageClass.
@@ -964,6 +965,7 @@ kubectl api-resources
   * EFS depends on NFS the port number of NFS is 2049
   * goto EFS edit onbount rules give NFS and port no 2049 and attach our instance security group id
 * **BBS Drivers installation**
+  * aws-efs-csi drivers should be installed
   * search aws efs csi drivers on chrome
   * you goto an git hub account then go to documentation and click on drivers installation
   * there is an option called Manifest (private registry) it contain below command
@@ -971,9 +973,133 @@ kubectl api-resources
 kubectl kustomize \
     "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/ecr/?ref=release-2.0" > private-ecr-driver.yaml
 ```
-* aws-efs-csi drivers should be installed
+* it will genrate a yaml file
+* after gnrateing the file use below command
+```
+kubectl apply -f private-ecr-driver.yaml
+```
 
-  1. EFS static
+  1. **EFS static**
     * create EFS filesystem
     * edit the security group, so that it will allow port 2049 from worker nodes.
-    * we should have drivers installed
+    * we should have drivers installed as shown in above
+    * after installing drivers do the below steps
+    * create pv
+    * create pvc
+    * use pvc in pod
+* **EFS static PV**
+* **syntax**
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: efs-static
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  persistentVolumeReclaimPolicy: Retain
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-016a860b1f7383cac
+```
+
+* **EFS static PVC**
+* **syntax**
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: efs-static
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: efs-static
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+* **PVC IN POD**
+* **syntax**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  labels:
+    demo: efs-static
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: nginx-data
+      mountPath: /usr/share/nginx/html
+  nodeSelector:
+    zone: 1b
+  volumes:
+  - name: nginx-data
+    persistentVolumeClaim:
+      claimName: efs-static
+```
+2. **EFS Dynamic**
+  * to do dynamic we requied StorageClass
+* **storageClass**
+* **SYNTAX**
+```yaml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-sc-roboshop
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  fileSystemId: fs-0715ef3ca61bfe431
+  directoryPerms: "700"
+  gidRangeStart: "1000" # optional
+  gidRangeEnd: "2000" # optional
+  basePath: "/roboshop" # optional
+```
+
+* **PVC**
+* **SYNTAX**
+```YAML
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: efs-dynamic
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc-roboshop
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+* **PVC IN POD**
+* **SYNTAX**
+```YAML
+apiVersion: v1
+kind: Pod
+metadata:
+  name: efs-dynamic
+  labels:
+    demo: efs-dynamic
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: nginx-data
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: nginx-data
+    persistentVolumeClaim:
+      claimName: efs-dynamic
+```
