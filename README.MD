@@ -1058,6 +1058,7 @@ spec:
 2. **EFS Dynamic**
   * to do dynamic we requied StorageClass
   * EFS access points are created dynamically
+  * to create access point dynamically attach policy of amazon elastic file system full access 
 * **storageClass**
 * **SYNTAX**
 ```yaml
