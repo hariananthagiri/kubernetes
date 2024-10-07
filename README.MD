@@ -35,6 +35,14 @@ kubectl get nodes
 ```
 kubectl get <component-name>
 ```
+* to watch the status of component use below command
+```
+watch kubectl get <component-name>
+```
+* to watch the status of pods use below command
+```
+watch kubectl get pods
+```
 * to see all the existing namespaces use below command
 ```
 kubectl get namespaces
