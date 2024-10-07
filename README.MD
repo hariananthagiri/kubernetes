@@ -800,17 +800,15 @@ spec:
   * EBS volume in ZONE specific
     * **VOLUME = SERVER AZ**
   * EBS uses only **ReadWriteOnce** mounting access mode only because it is hard disk
-2. EFS (Elastic File System)
-  * it is like nfs or drive
-* external volumes or persistent volumes
+
 * **prerequisites**
 * we need to make this volume available to k8 cluster. we should install drivers. 
   * aws-ebs-csi drivers should be installed
   * a proper role should be attached to ec2 instance to access EBS.
-* **Drivers installation**
-  * search kubernetes volumes on chrome click on volumes option 
-  * now search for ebs click on ebs driver third party application
-  * you goto an git hub account then go to documentation and click on drivers installation
+  
+* **BBS Drivers installation**
+  * search aws ebs csi drivers on chrome
+  * you can see a git hub account then go to documentation and click on drivers installation
   * there is an option called Kustomize it contain below command
 ```
 kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.35"
@@ -959,6 +957,23 @@ kubectl api-resources
 * persistent volume is the physical thing
 * persistent volume claim is the request
 
-2. EFS (Elastic File System)
+2. **EFS (Elastic File System)**
+  * it is like nfs or drive
+  * external volumes or persistent volumes
+  * EFS size for single file is 47.9TIB
+  * EFS depends on NFS the port number of NFS is 2049
+  * goto EFS edit onbount rules give NFS and port no 2049 and attach our instance security group id
+* **BBS Drivers installation**
+  * search aws efs csi drivers on chrome
+  * you goto an git hub account then go to documentation and click on drivers installation
+  * there is an option called Manifest (private registry) it contain below command
+```
+kubectl kustomize \
+    "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/ecr/?ref=release-2.0" > private-ecr-driver.yaml
+```
+* aws-efs-csi drivers should be installed
 
-
+  1. EFS static
+    * create EFS filesystem
+    * edit the security group, so that it will allow port 2049 from worker nodes.
+    * we should have drivers installed
