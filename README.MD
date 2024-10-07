@@ -1049,6 +1049,7 @@ spec:
 ```
 2. **EFS Dynamic**
   * to do dynamic we requied StorageClass
+  * EFS access points are created dynamically
 * **storageClass**
 * **SYNTAX**
 ```yaml
@@ -1082,7 +1083,7 @@ spec:
       storage: 5Gi
 ```
 
-* **PVC IN POD**
+* **PVC IN DYNAMIC**
 * **SYNTAX**
 ```YAML
 apiVersion: v1
