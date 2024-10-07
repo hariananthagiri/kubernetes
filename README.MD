@@ -788,6 +788,7 @@ spec:
       version: v1
 ```
 * **ACCESS MODES**
+  * accessModes are list type starts from spec section
 1. readOnly 
 2. ReadWriteOnly
 3. ReadWriteOnce
@@ -829,6 +830,7 @@ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernete
   * aws-ebs-csi drivers should be installed
   * a proper role should be attached to ec2 instance to access EBS.
 * **Drivers installation**
+  * CSI(container storage interface) drivers
   * search kubernetes volumes on chrome click on volumes option 
   * now search for ebs click on ebs driver third party application
   * you goto an git hub account then go to documentation and click on drivers installation
@@ -837,6 +839,7 @@ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernete
 kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.35"
 ```
 * aws-ebs-csi drivers should be installed
+* container storage interface(csi)
 * **kubernetes volume objects/resources**
 1. **persistant volume(PV)**        
   * it represents the external storage. it is like a raper on volume
