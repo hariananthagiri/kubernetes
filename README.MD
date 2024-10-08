@@ -1121,6 +1121,7 @@ spec:
 # HELM CHART
 * templatise the kubernetes manifests
 * package manager for kubernetes
+* to parameterise the values used in manifest.yaml we use helm sheet
 
 * **INSTALLATION**
 ```
@@ -1223,5 +1224,7 @@ helm upgrade - install aws-ebs-csi-driver\- namespace kube-system \aws-ebs-csi-d
 * give AmazonEbcsDriverPolicy permisiion 
 * **deployment**   
     * it is used to create stateless (i.e no own database) applications in kubernetes
+* **headless service**
+  * in database cluster to send data from one replica to other replica we shold use headless service
 
 
