@@ -1228,4 +1228,5 @@ helm upgrade - install aws-ebs-csi-driver\- namespace kube-system \aws-ebs-csi-d
 * **headless service**
   * in database cluster to send data from one replica to other replica we shold use headless service
 
-
+* **NOTE**
+* ***RUNNING DATABASES INSIDE THE KUBERNETES CLUSTER IS VERY RISKY***
