@@ -1,4 +1,5 @@
 # KUBERNETES
+* it is Platform As A Service(PAAS)
 * Kubernetes, also known as "K8s", is an open-source container orchestration platform developed by Google.
 * it is designed to automate the deployment, scaling, and management of containerized applications across a cluster of nodes.
 * Kubernetes provides a consistent and reliable way to manage applications, regardless of whether they are running on-premises, in the cloud, or in hybrid environments. 
