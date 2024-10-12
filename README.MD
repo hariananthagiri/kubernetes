@@ -1166,6 +1166,7 @@ appVersion: 1.0.1 # apk version
 ```
 2. templates
     * we definately need to give a folder named templates in helm charts all deploymentand .yaml file are automatically executed here
+    * we mention the kubernaties resources used here...
 3. values.yaml
     * we maintain values.yaml file in root folder to import and export values 
 * we declere a variable as below
@@ -1261,9 +1262,10 @@ spec:
         requests:
           storage: 1Gi
 ```
-* it is mixed with the syntax of **sets + PVC** in the place of PVC we use **VolumeClaimTemplates:** similar to pvc we also use new components like **minReadySeconds, terminationGracePeriodSeconds, serviceName**
+* it is mixed with the syntax of **sets + PVC** in the place of PVC we use **VolumeClaimTemplates:** similar to pvc we also use new components like **minReadySeconds, terminationGracePeriodSeconds, serviceName** 
 * **deployment**   
     * it is used to create stateless (i.e no own database) applications in kubernetes
+
 * **headless service**
   * in database cluster to send data from one replica to other replica we shold use headless service
 
