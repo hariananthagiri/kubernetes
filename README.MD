@@ -1223,6 +1223,44 @@ helm uninstall aws-ebs-csi-driver -n kube-system
 helm upgrade - install aws-ebs-csi-driver\- namespace kube-system \aws-ebs-csi-driver/aws-ebs-csi-driver
 ```
 * give AmazonEbcsDriverPolicy permisiion 
+* **SYNTAX**
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: nginx # has to match .spec.template.metadata.labels
+  serviceName: "nginx"
+  replicas: 3 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: nginx # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: nginx
+        image: registry.k8s.io/nginx-slim:0.8
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 1Gi
+```
 * **deployment**   
     * it is used to create stateless (i.e no own database) applications in kubernetes
 * **headless service**
