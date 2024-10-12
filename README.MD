@@ -1261,6 +1261,7 @@ spec:
         requests:
           storage: 1Gi
 ```
+* it is mixed with the syntax of **sets + PVC** in the place of PVC we use **VolumeClaimTemplates:** similar to pvc we also use new components like **minReadySeconds, terminationGracePeriodSeconds, serviceName**
 * **deployment**   
     * it is used to create stateless (i.e no own database) applications in kubernetes
 * **headless service**
