@@ -665,6 +665,13 @@ eksctl create cluster --config-file=your.yamlfile
 ```
 eksctl delete cluster --config-file=your.yamlfile
 ```
+* if you got any connection related error in  EKS use below commands
+```
+aws sts get-caller-identity
+```
+```
+aws eks update-kubeconfig --region <region-name> --name <cluster-name>
+```
 ###### IMAGE PULL POLICY
 1. **IfNotPresent**
   * the image is pulled locally only if it is not alrady present locally
