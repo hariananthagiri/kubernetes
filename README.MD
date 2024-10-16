@@ -1278,3 +1278,16 @@ spec:
 
 * **NOTE**
 * ***RUNNING DATABASES INSIDE THE KUBERNETES CLUSTER IS VERY RISKY***
+
+* **K9S**
+* to oen k9s ui type below command
+```
+k9s
+```
+* to see services/pods/namespaces
+```
+shift + colon <services/pods/namespaces>
+```
+* to see logs click <l> and click <ESC> to come back
+* to describe use <d>
+* 
