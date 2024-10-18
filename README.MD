@@ -1288,6 +1288,5 @@ k9s
 ```
 shift + colon <services/pods/namespaces>
 ```
-* to see logs click <l> and click <ESC> to come back
-* to describe use <d>
-* 
+* to see logs click **l** and click **ESC** to come back
+* to describe use **d** 
