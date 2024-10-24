@@ -1278,6 +1278,11 @@ spec:
 
 * **NOTE**
 * ***RUNNING DATABASES INSIDE THE KUBERNETES CLUSTER IS VERY RISKY***
+* when we are using mysql use below arg to avide errors
+```yaml
+args:
+- "--ignore-db-dir=lost+found"
+```
 
 * **K9S**
 * to oen k9s ui type below command
